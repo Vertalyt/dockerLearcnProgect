@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql
+    restart: always
+    env_file: ./.env
+    healthcheck:
+    # провожу проверку на то что база уже создана проверку запускаю каждые 20 секунд
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 30
+
+  table-create:
+    build: ./table-create
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    env_file: ./.env
+    volumes:
+    # даю указание использовать node_modules в контейнере, а данные с папки на сайте, для хот релоад
+      - /app/node_modules
+      - ./table-create:/app
+    # проверяю что создание и заполнение таблиц закончилось, по последней, по productsDetails
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('mysql2').createConnection({host: process.env.MYSQL_HOST, port: process.env.MYSQL_PORT, user: process.env.MYSQL_USER, password: process.env.MYSQL_PASSWORD, database: process.env.MYSQL_DATABASE}).promise().query('SELECT COUNT(*) FROM productsDetails').then(([rows]) => { process.exit(rows[0]['COUNT(*)'] > 0 ? 0 : 1); }).catch(error => { process.exit(1); })"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  api:
+    build: ./api
+    restart: always
+    ports:
+      - '4000:4000'
+    volumes:
+      - /app/node_modules
+      - ./api:/app
+    depends_on:
+      table-create:
+        condition: service_healthy
+    env_file: ./.env
+
+
+  frontend:
+      # даю указание использовать node_modules в контейнере, а данные с папки на сайте, для хот релоад
+    build: ./frontend
+    restart: always
+    ports:
+      - '3000:3000'
+    depends_on:
+      - api
+    env_file: ./.env
+    volumes:
+      - /app/node_modules
+      - /app/.nuxt
+      - ./frontend:/app

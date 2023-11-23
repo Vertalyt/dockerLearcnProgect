@@ -1,0 +1,21 @@
+{
+    "NoOrders":"No orders selected.",
+    "Products": "Products.",
+    "Orders" : "Orders",
+    "Coming" : "Coming",
+    "Specification" : "Specification",
+    "Free" : "Free",
+    "Repair" : "Repair",
+    "New" : "New",
+    "SecondHand" : "Second-hand",
+    "Guarantee" : "Guarantee",
+    "Price" : "Price",
+    "from" : "from",
+    "before" : "before",
+    "Type" : "Type",
+    "SuredeleteOrder" : "Are you sure you want to delete this order?",
+    "Cancel" : "Cancel",
+    "Confirm" : "Confirm",
+    "Register" : "Register",
+    "Login" : "Login"
+}

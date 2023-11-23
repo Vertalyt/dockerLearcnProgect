@@ -1,0 +1,23 @@
+{
+  "name": "dzen",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon --legacy-watch --exitcrash  server.mjs",
+    "build": "vite build --emptyOutDir",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^2.3.3",
+    "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.52.0",
+    "eslint-plugin-vue": "^9.18.1",
+    "nodemon": "^2.0.15"
+  }
+}
