@@ -1,10 +1,13 @@
 
 <template>
-  <HeadSelect v-if="specification.length > 0" :selectItems="specification" nameSelect="Specification" @selectChange="selectChange"/>
 
+
+    
 <div
 class="col-12 d-flex flex-wrap align-items-center justify-content-center mt-5"
 >
+<HeadSelect v-if="specification.length > 0" :selectItems="specification" nameSelect="Specification" @selectChange="selectChange"/>
+  
 <ul class="col-12 list-group d-grid"
 v-if="producs"
 >
@@ -69,6 +72,8 @@ class="d-flex flex-wrap align-items-center"
 
 </ul>
 </div>
+
+
 </template>
 
 

@@ -1,13 +1,10 @@
 import { defineStore } from "pinia";
-
-import { jwtDecode } from "jwt-decode";
 import { useModalStore } from './modalStore'
 
 export const useaAuthStore = defineStore("auth", {
   state: () => ({
     auth: {
       isCheck: false,
-      token: "",
       token_info: {},
     },
   }),
@@ -82,24 +79,20 @@ export const useaAuthStore = defineStore("auth", {
 
       }
     },
-    accessToken({ token }) {
+    accessToken({ token_info }) {
       try {
-        const decodedToken = jwtDecode(token);
-        const currentTimestamp = Math.floor(Date.now() / 1000); // текущее время в секундах
-        if (currentTimestamp >= decodedToken.exp) {
-          this.auth.token = "";
-          console.log("Токен просрочен");
-        } else {
-          // Используем метод хранилища для управления состоянием
-          // document.cookie = `token=${token}; Secure; SameSite=Strict; Path=/`;
-          this.auth.token = token;
           this.auth.isCheck = true;
-          this.auth.token_info = decodedToken;
+          this.auth.token_info = token_info;
           navigateTo("/");
-        }
       } catch (error) {
         console.error("Ошибка при обработке токена:", error);
       }
     },
+    clearTocken() {
+      this.auth = {
+        isCheck: false,
+        token_info: {},
+      }
+    }
   },
 });

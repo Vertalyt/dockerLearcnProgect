@@ -1,6 +1,6 @@
 
 <template>
-          <div class="col-4 d-flex mx-auto">
+          <div class="col-4 d-flex mx-auto mb-4">
             <p class="m-auto pe-3">{{ $t(name) }}:</p>
             <select 
             @change="selectChange"

@@ -1,6 +1,7 @@
 
 <template>
   <div >
+
     <HeadDebetCard 
     v-if="ordersDate"
     :countProducs="infoProducs.length"
@@ -8,13 +9,12 @@
     :specification="specification"
     @filterCard="filterCard"
      />
-
-
+    <Transition>
     <DebetCard 
     v-if="filterProducts"
     :items="filterProducts"/>
-
     <p v-else class="d-flex justify-content-center m-3">{{ $t('NoOrders') }} </p>
+  </Transition>
   </div>
 
 </template>
@@ -85,3 +85,14 @@ name: 'DebetView',
 }
 </script>
 
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>

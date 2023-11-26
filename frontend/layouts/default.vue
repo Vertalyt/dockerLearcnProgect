@@ -2,16 +2,21 @@
   <div class="container-fluid py-4 px-3 mx-auto">
     <div class="row" style="height: 90vh">
       <div class="col-xs-4 col-sm-3 col-xl-2 col-xxl-2 text-bg-light">
-
         <ProfileIcon />
         <MainMenu />
       </div>
 
+
       <div
         class="col-12 col-xs-12 col-sm-9 col-xl-10 col-xxl-10 color_Bg_Conteiner"
       >
-        <RouterView />
+        <RouterView v-slot="{ Component }">
+          <Transition>
+          <component :is="Component" />
+        </Transition>
+        </RouterView>
       </div>
+
     </div>
   </div>
 </template>
@@ -37,5 +42,15 @@ export default {
   padding: 20px;
   background-color: #f0f3f5;
   box-shadow: inset 0px 0px 1.5rem rgba(0, 0, 0, 0.4);
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>
